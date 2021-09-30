@@ -28,7 +28,7 @@ class CServo {
       Serial.print((*this).currentAngle);
       Serial.println(" degrees");
     }
-    void set_infoPrint(infoPrint) {
+    void set_infoPrint(bool infoPrint) {
       (*this).infoPrint = infoPrint;
     }
     int angleToPulse(int ang) {
