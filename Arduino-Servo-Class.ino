@@ -109,12 +109,12 @@ class CServo {
       float random_time = (random(0, myrandom_time)) / 1000.0;
       (*this).set_angle(random(0, 180), random_time);
     }
-    void vibrate(int interval = 15, float delaytime = 3, int duration = 100) {
+    void vibrate(int start_at = 30, int interval = 15, float delaytime = 3, int duration = 100) {
       Serial.println("vibrate starting...");
       int starttime = millis();
       int endtime = starttime;
       int duration_millis = duration * 1000;
-      for (int i = interval; i <= 180; i = i + interval) {
+      for (int i = start_at; i <= 180; i = i + interval) {
         (*this).set_angle(0, 0);
         delay(delaytime * 1000);
         (*this).set_angle(i, 0);
@@ -472,12 +472,12 @@ class ServoPumpkin {
       delay(delay_amount * 1000);
       Serial.println("lookdirections ending...");
     }
-    void ladders(int interval = 15, float delaytime = 3, int duration = 100) {
+    void ladders(int start_at = 0, int interval = 15, float delaytime = 0.5, int duration = 100) {
       Serial.println("ladders starting...");
       int starttime = millis();
       int endtime = starttime;
       int duration_millis = duration * 1000;
-      for (int i = interval; i <= 180; i = i + interval) {
+      for (int i = start_at+interval; i <= 180; i = i + interval) {
         eye0.set_angle(0, 0);
         eye1.set_angle(0, 0);
         eye2.set_angle(0, 0);
@@ -496,7 +496,7 @@ class ServoPumpkin {
         eye6.set_angle(i, 0);
         eye7.set_angle(i, 0);
         delay(delaytime * 1000);
-        if ((endtime - starttime) <= duration_millis){
+        if ((endtime - starttime) >= duration_millis){
           endtime = millis();
         }else {
           break;
@@ -513,14 +513,14 @@ class ServoPumpkin {
       Serial.println("ladders ending...");
     }
     void vibrate_rounds(){
-      eye0.vibrate(1, 0.05, 1);
-      eye1.vibrate(1, 0.05, 1);
-      eye2.vibrate(1, 0.05, 1);
-      eye3.vibrate(1, 0.05, 1);
-      eye4.vibrate(1, 0.05, 1);
-      eye5.vibrate(1, 0.05, 1);
-      eye6.vibrate(1, 0.05, 1);
-      eye7.vibrate(1, 0.05, 1);
+      eye0.vibrate(30, 1, 0.05, 1);
+      eye1.vibrate(30, 1, 0.05, 1);
+      eye2.vibrate(30, 1, 0.05, 1);
+      eye3.vibrate(30, 1, 0.05, 1);
+      eye4.vibrate(30, 1, 0.05, 1);
+      eye5.vibrate(30, 1, 0.05, 1);
+      eye6.vibrate(30, 1, 0.05, 1);
+      eye7.vibrate(30, 1, 0.05, 1);
     }
 };
 
@@ -556,18 +556,19 @@ void setup() {
   while (true) {
     pumpkin.vibrate_rounds();
     pumpkin.random_eyes(15);
-    pumpkin.ladders(1, 0.05);
+    pumpkin.ladders(30, 1, 0.05, 3); //vibrate all for 1 second
     pumpkin.min_max(6, 1);
-    pumpkin.min_max_glide(0.25);
+    pumpkin.min_max_glide(0.25); //slow glide
     pumpkin.rows();
     pumpkin.half_half();
-    pumpkin.min_max_glide(0.1);
+    pumpkin.min_max_glide(0.1); //fast glide
+    pumpkin.columns_converging();
     pumpkin.lookdirections();
-    pumpkin.ladders(10, 0.3);
+    pumpkin.ladders(0, 10, 0.3); //slow ladders
     pumpkin.columns();
-    eyes.set_angle(180);
-    eyes.glide_angle(0, 180, 4);
-    pumpkin.ladders(2, 0.1);
+    eyes.set_angle(0);
+    eyes.glide_angle(0, 180, 3);
+    pumpkin.ladders(0, 2, 0.1); //fast ladders
   }
 
 }
