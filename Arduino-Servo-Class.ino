@@ -472,11 +472,11 @@ class ServoPumpkin {
       delay(delay_amount * 1000);
       Serial.println("lookdirections ending...");
     }
-    void ladders(int start_at = 0, int interval = 15, float delaytime = 0.5, int duration = 100) {
+    void ladders(int start_at = 0, int interval = 15, float delaytime = 0.5, long duration = 100000) {
       Serial.println("ladders starting...");
       int starttime = millis();
       int endtime = starttime;
-      int duration_millis = duration * 1000;
+      long duration_millis = duration * 1000;
       for (int i = start_at+interval; i <= 180; i = i + interval) {
         eye0.set_angle(0, 0);
         eye1.set_angle(0, 0);
@@ -496,7 +496,7 @@ class ServoPumpkin {
         eye6.set_angle(i, 0);
         eye7.set_angle(i, 0);
         delay(delaytime * 1000);
-        if ((endtime - starttime) >= duration_millis){
+        if ((endtime - starttime) < duration_millis){
           endtime = millis();
         }else {
           break;
@@ -556,7 +556,7 @@ void setup() {
   while (true) {
     pumpkin.vibrate_rounds();
     pumpkin.random_eyes(15);
-    pumpkin.ladders(30, 1, 0.05, 3); //vibrate all for 1 second
+    pumpkin.ladders(30, 1, 0.05, 2); //vibrate all for 3 seconds
     pumpkin.min_max(6, 1);
     pumpkin.min_max_glide(0.25); //slow glide
     pumpkin.rows();
@@ -568,7 +568,7 @@ void setup() {
     pumpkin.columns();
     eyes.set_angle(0);
     eyes.glide_angle(0, 180, 3);
-    pumpkin.ladders(0, 2, 0.1); //fast ladders
+    pumpkin.ladders(0, 2, 0.1); //fast ladders*/
   }
 
 }
