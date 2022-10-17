@@ -144,7 +144,7 @@ class CServoGroup {
     CServo servo5;
     CServo servo6;
     CServo servo7;
-    void init(CServo servo0, CServo servo1, CServo servo2, CServo servo3, CServo servo4, CServo servo5, CServo servo6, CServo servo7, int currentAngle = -1, bool infoPrint = false) {
+    void init(CServo servo0, CServo servo1, CServo servo2, CServo servo3, CServo servo4, CServo servo5, CServo servo6, CServo servo7, int currentAngle = -1, bool infoPrint = false) { //add more servos by adding more arguments to this function. For example - CServo servo8
       (*this).currentAngle = currentAngle;
       (*this).infoPrint = infoPrint;
       (*this).servo0 = servo0;
@@ -155,6 +155,7 @@ class CServoGroup {
       (*this).servo5 = servo5;
       (*this).servo6 = servo6;
       (*this).servo7 = servo7;
+      //add more servos by repeating this with more variables
     }
     void set_angle(int myangle = 90, float wait_time = 1) {
       servo0.set_angle(myangle, 0);
@@ -165,6 +166,7 @@ class CServoGroup {
       servo5.set_angle(myangle, 0);
       servo6.set_angle(myangle, 0);
       servo7.set_angle(myangle, 0);
+      //add more servos by repeating this line with more servos
       delay(wait_time * 1000);
     }
     void glide_angle(int startingAngle, int endingAngle, float timeToTake) {
@@ -205,6 +207,7 @@ class CServoGroup {
 };
 class ServoPumpkin {
   public:
+    //not sure if these lines are needed:
     CServo eye0;
     CServo eye1;
     CServo eye2;
@@ -214,7 +217,7 @@ class ServoPumpkin {
     CServo eye6;
     CServo eye7;
 
-    void init(CServo eye0, CServo eye1, CServo eye2, CServo eye3, CServo eye4, CServo eye5, CServo eye6, CServo eye7) {
+    void init(CServo eye0, CServo eye1, CServo eye2, CServo eye3, CServo eye4, CServo eye5, CServo eye6, CServo eye7) { //add more eyes by creating more eye variables to pass in
       (*this).eye0 = eye0;
       (*this).eye1 = eye1;
       (*this).eye2 = eye2;
@@ -223,6 +226,7 @@ class ServoPumpkin {
       (*this).eye5 = eye5;
       (*this).eye6 = eye6;
       (*this).eye7 = eye7;
+      //add more eyes by repeating this process
     }
     void reset_out(float amount_time = 2) {
       eye0.set_angle(180, 0);
@@ -233,6 +237,8 @@ class ServoPumpkin {
       eye5.set_angle(0, 0);
       eye6.set_angle(0, 0);
       eye7.set_angle(0, 0);
+      //add more eyes by repeating this with the angles necessary for the custom eyes (do this for all routines)
+
       delay(amount_time * 1000);
     }
     void random_eyes(int duration, int random_time = 200) { //give duration of running in seconds
@@ -548,6 +554,7 @@ void setup() {
   bottom_mid_left.init(5, 90, 140);
   bottom_mid_right.init(6, 80, 150);
   bottom_right.init(7, 38, 83);
+
   pumpkin.init(top_left, top_mid_left, top_mid_right, top_right, bottom_left, bottom_mid_left, bottom_mid_right, bottom_right);
 
   CServoGroup eyes;
